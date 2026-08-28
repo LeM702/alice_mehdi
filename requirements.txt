@@ -1,0 +1,10 @@
+requests==2.33.1
+nltk==3.10.3
+langdetect==1.0.9
+scikit-learn==1.8.0
+scipy==1.17.1
+numpy==2.4.4
+gensim==4.4.0
+sumy==0.13.0
+lxml==6.1.2
+lxml_html_clean==0.4.5
