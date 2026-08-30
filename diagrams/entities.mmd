@@ -1,0 +1,12 @@
+flowchart TD
+    A[book_id] --> B[downloader.get_book_text]
+    A --> C[downloader.get_book_language]
+    B --> D["text_utils.clean_text(lower=False)\nkeep casing: capitals signal names"]
+    D --> E[text_utils.split_sentences]
+    E --> F[Per sentence: word_tokenize + pos_tag]
+    F --> G["ne_chunker().parse(tagged)\nchunker instance loaded ONCE and reused"]
+    G --> H["Keep PERSON chunks -> characters\nKeep GPE / LOCATION chunks -> locations"]
+    H --> I[Drop false positives\nmr/mrs/gutenberg/chapter/...]
+    I --> J[Merge case variants,\nkeep entities mentioned >= 2 times]
+    J --> K[Cache to cache/id_entities.json]
+    K --> L["Return {characters: [...], locations: [...]}"]
