@@ -1,0 +1,11 @@
+flowchart TD
+    A[book_id] --> B{book_id in\nfixed 21-book COLLECTION?}
+    B -- no --> Z[Error: not in reference collection]
+    B -- yes --> C[Load / build cache/similar_corpus.json\ndownload + clean + lemmatize\nevery collection book, once]
+    C --> D["TfidfVectorizer(unigrams+bigrams,\nsublinear_tf, min_df=2)"]
+    D --> E[Fit-transform all 21 texts]
+    E --> F["cosine_similarity(target, all)"]
+    F --> G[Sort other 20 books\nby decreasing similarity]
+    G --> H[Take top 5 -> map id to title]
+    H --> I[Cache to cache/id_similar.json]
+    I --> J["Return [title1, ..., title5]"]
