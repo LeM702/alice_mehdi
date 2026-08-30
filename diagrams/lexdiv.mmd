@@ -1,0 +1,11 @@
+flowchart TD
+    A[book_id] --> B[downloader.get_book_text\ndownload / read from books cache]
+    A --> C[downloader.get_book_language]
+    B --> D[text_utils.clean_text\nstrip PG header/footer, collapse spaces]
+    D --> E[text_utils.tokenize_text\nword_tokenize, drop punctuation\nno stopword removal, no lemmatization]
+    C --> E
+    E --> F[Filter out pure-numeric tokens]
+    F --> G[Count with collections.Counter]
+    G --> H["Compute tok, typ, hap, ttr, mwl, mwf"]
+    H --> I[Cache to cache/id_lexdiv.json]
+    I --> J[Return dict]
