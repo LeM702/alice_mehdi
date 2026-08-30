@@ -1,0 +1,12 @@
+flowchart TD
+    A[book_id] --> B[downloader.get_book_text]
+    A --> C[downloader.get_book_language]
+    B --> D["text_utils.clean_text(lower=False)"]
+    D --> E["sumy PlaintextParser + Tokenizer(language)"]
+    C --> E
+    E --> F[TextRankSummarizer\ngraph of sentences, edge = similarity]
+    F --> G[Rank sentences like PageRank]
+    G --> H[Keep top SUMMARY_SENTENCES\nin their original order]
+    H --> I[Join into a single string]
+    I --> J[Cache to cache/id_summarize.json]
+    J --> K[Return summary string]
