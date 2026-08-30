@@ -1,0 +1,14 @@
+flowchart TD
+    A[book_id] --> B[downloader.get_book_info]
+    A --> C[lexdiv.get_lexdiv]
+    A --> D[topics.get_topics]
+    A --> E[entities.get_entities]
+    A --> F[summarize.get_summarize]
+    A --> G[similar.get_similar]
+    B --> H[Assemble book card]
+    C --> H
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    H --> I["Return {info, lexdiv, topics,\nentities, summary, similar}"]
