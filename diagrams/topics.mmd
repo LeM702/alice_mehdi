@@ -1,0 +1,15 @@
+flowchart TD
+    A[book_id] --> B[downloader.get_book_text]
+    A --> C[downloader.get_book_language]
+    B --> D[text_utils.clean_text]
+    D --> E[text_utils.split_sections\nsplit on CHAPTER/PART markers]
+    E --> F[Per section: tokenize + remove stopwords\n+ lemmatize + drop narrative filler words]
+    C --> F
+    F --> G[Drop sections shorter than\nMIN_TOKENS_PER_SECTION]
+    G --> H[gensim.corpora.Dictionary\n+ filter_extremes]
+    H --> I[Build bag-of-words corpus]
+    I --> J["LdaModel(num_topics = min(MAX_TOPICS, sections))"]
+    J --> K[For each section: get its\nhighest-weight main topic]
+    K --> L[Take top 10 words of that topic]
+    L --> M[Cache to cache/id_topics.json]
+    M --> N["Return {1: [...10 words], 2: [...], ...}"]
